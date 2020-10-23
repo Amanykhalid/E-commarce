@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
+use Illuminate\Contracts\Session\Session;
+use Illuminate\Support\Facades\Redirect;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,5 +18,12 @@ use App\Http\Controllers\ProductController;
 */
 
 Route::view('/login', 'login');
+Route::get('/logout',  function () {
+    session()->forget('user');
+    return Redirect('login');    
+});
 Route::post('/login', [UserController::class,'Login']);
 Route::get('/', [ProductController::class,'index']);
+Route::get('detail/{id}', [ProductController::class,'detail']);
+Route::get('search', [ProductController::class,'search']);
+Route::get('add_to_card', [ProductController::class,'addToCard']);
